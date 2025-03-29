@@ -10,7 +10,7 @@ Record device's screen
 ## Install
 
 ```bash
-npm install @capgo/capacitor-screen-recorder
+npm install capacitor-screen-recorder
 npx cap sync
 ```
 
