@@ -2,48 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [7.1.5](https://github.com/Cap-go/capacitor-screen-recorder/compare/7.1.4...7.1.5) (2025-03-03)
-
-### [7.1.4](https://github.com/Cap-go/capacitor-screen-recorder/compare/7.1.3...7.1.4) (2025-02-27)
-
-
-### Bug Fixes
-
-* definition ([8f5d683](https://github.com/Cap-go/capacitor-screen-recorder/commit/8f5d683ceb6b2d628cab3c0bb8b3d41398294d43))
-
-### [7.1.3](https://github.com/Cap-go/capacitor-screen-recorder/compare/7.1.2...7.1.3) (2025-02-27)
-
-
-### Bug Fixes
-
-* CI ([3dce231](https://github.com/Cap-go/capacitor-screen-recorder/commit/3dce231b45be426b23f26809e1de77386b2606b1))
-
-### [7.1.2](https://github.com/Cap-go/capacitor-screen-recorder/compare/7.1.1...7.1.2) (2025-02-09)
-
-
-### Bug Fixes
-
-*  CICD ([7d013a9](https://github.com/Cap-go/capacitor-screen-recorder/commit/7d013a98fc6c1cb60ea7b0941502087ba4e7707a))
-
-### [7.1.1](https://github.com/Cap-go/capacitor-screen-recorder/compare/7.1.0...7.1.1) (2025-02-08)
-
-
-### Bug Fixes
-
-* deploy ([4ff4392](https://github.com/Cap-go/capacitor-screen-recorder/commit/4ff4392b28526f09b645709d1d1722f8284cb5e4))
-
-## [7.1.0](https://github.com/riderx/capacitor-screen-recorder/compare/8.1.105...7.1.0) (2025-02-08)
-
-
-### Features
-
-* migrate to capacitor v7 ([d2647cf](https://github.com/riderx/capacitor-screen-recorder/commit/d2647cfdc4341d1f83fdc1c64d36a4c772d6b841))
-
-
-### Bug Fixes
-
-* CI/CD ([d955ac5](https://github.com/riderx/capacitor-screen-recorder/commit/d955ac5117fc4d76592c27741ecd8cf036cc7370))
-
 ### [8.1.105](https://github.com/riderx/capacitor-screen-recorder/compare/8.1.104...8.1.105) (2025-02-03)
 
 ### [8.1.104](https://github.com/riderx/capacitor-screen-recorder/compare/8.1.103...8.1.104) (2025-01-27)

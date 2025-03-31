@@ -4,10 +4,9 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
-// import dev.bmcreations.scrcast.ScrCast;
-// import dev.bmcreations.scrcast.config.Options;
 import dev.chalo.scrcast.ScrCast;
 import dev.chalo.scrcast.config.Options;
+
 @CapacitorPlugin(name = "ScreenRecorder")
 public class ScreenRecorderPlugin extends Plugin {
 
