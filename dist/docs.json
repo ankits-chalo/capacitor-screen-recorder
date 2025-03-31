@@ -1,0 +1,35 @@
+{
+  "api": {
+    "name": "ScreenRecorderPlugin",
+    "slug": "screenrecorderplugin",
+    "docs": "",
+    "tags": [],
+    "methods": [
+      {
+        "name": "start",
+        "signature": "() => Promise<void>",
+        "parameters": [],
+        "returns": "Promise<void>",
+        "tags": [],
+        "docs": "start the recording",
+        "complexTypes": [],
+        "slug": "start"
+      },
+      {
+        "name": "stop",
+        "signature": "() => Promise<void>",
+        "parameters": [],
+        "returns": "Promise<void>",
+        "tags": [],
+        "docs": "stop the recording",
+        "complexTypes": [],
+        "slug": "stop"
+      }
+    ],
+    "properties": []
+  },
+  "interfaces": [],
+  "enums": [],
+  "typeAliases": [],
+  "pluginConfigs": []
+}
