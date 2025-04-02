@@ -4,6 +4,9 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
+
+import java.util.function.BiConsumer;
+
 import dev.chalo.scrcast.ScrCast;
 import dev.chalo.scrcast.config.Options;
 
@@ -21,8 +24,22 @@ public class ScreenRecorderPlugin extends Plugin {
 
   @PluginMethod
   public void start(PluginCall call) {
-    recorder.record();
-    call.resolve();
+    startRecording(call);
+  }
+
+  private void startRecording(PluginCall call) {
+    recorder.setRecordingCallback((success, message) -> {
+      if (success) {
+        call.resolve();
+      } else {
+        call.reject(message);
+      }
+    });
+    recorder.record(( success,  message) -> {
+        if (!success) {
+          call.reject(message != null ? message : "Unknown error"); // Reject with an error message
+        }
+    });
   }
 
   @PluginMethod
