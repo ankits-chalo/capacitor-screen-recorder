@@ -143,12 +143,15 @@ public final class ScreenRecorder {
     }
 
     private func handleSampleBuffer(sampleBuffer: CMSampleBuffer) {
-        if self.videoWriter?.status == AVAssetWriter.Status.unknown {
-            self.videoWriter?.startWriting()
-            self.videoWriter?.startSession(atSourceTime: CMSampleBufferGetPresentationTimeStamp(sampleBuffer))
-        } else if self.videoWriter?.status == AVAssetWriter.Status.writing &&
-                    self.videoWriterInput?.isReadyForMoreMediaData == true {
-            self.videoWriterInput?.append(sampleBuffer)
+        guard let videoWriter = self.videoWriter else { return }
+        if videoWriter.status == .unknown {
+            videoWriter.startWriting()
+            videoWriter.startSession(atSourceTime: CMSampleBufferGetPresentationTimeStamp(sampleBuffer))
+        }
+        if videoWriter.status == .writing,
+        let videoWriterInput = self.videoWriterInput,
+        videoWriterInput.isReadyForMoreMediaData {
+        videoWriterInput.append(sampleBuffer)
         }
     }
 
