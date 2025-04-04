@@ -62,8 +62,12 @@ public final class ScreenRecorder {
             self.videoOutputURL = passedVideoOutput
             newVideoOutputURL = passedVideoOutput
         } else {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyyMMdd_HHmmss"
+            let dateString = dateFormatter.string(from: Date())
+            let videoFileName = "record_\(dateString).mp4"
             let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
-            newVideoOutputURL = URL(fileURLWithPath: documentsPath.appendingPathComponent("WylerNewVideo.mp4"))
+            newVideoOutputURL = URL(fileURLWithPath: documentsPath.appendingPathComponent(videoFileName))
             self.videoOutputURL = newVideoOutputURL
         }
 
