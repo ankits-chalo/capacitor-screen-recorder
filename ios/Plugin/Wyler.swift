@@ -175,7 +175,13 @@ public final class ScreenRecorder {
                 self.micAudioWriterInput?.markAsFinished()
                 self.appAudioWriterInput?.markAsFinished()
                 self.videoWriter?.finishWriting {
-                    self.saveVideoToCameraRollAfterAuthorized(handler: handler)
+                    self.saveVideoToCameraRollAfterAuthorized { saveError in
+                        if let saveError = saveError {
+                        handler(saveError, nil)
+                        } else {
+                        handler(nil, self.videoOutputURL)
+                        }
+                    }
                 }
             }
         })

@@ -45,6 +45,10 @@ public class ScreenRecorderPlugin extends Plugin {
   @PluginMethod
   public void stop(PluginCall call) {
     recorder.stopRecording();
+    String outputFile = recorder.getOutputFile(); // Get file path
+    JSObject result = new JSObject();
+    result.put("outputFile", outputFile);
+    call.resolve(result);
     call.resolve();
   }
 }

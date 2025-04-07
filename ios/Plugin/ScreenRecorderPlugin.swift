@@ -10,6 +10,11 @@ public class ScreenRecorderPlugin: CAPPlugin {
     private let implementation = ScreenRecorder()
 
     @objc func start(_ call: CAPPluginCall) {
+        //  let outputPath = call.getString("outputPath") ?? "default.mov"
+
+        // // Create a full file URL in app's documents directory
+        // let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        // let fileURL = documents.appendingPathComponent(outputPath)
         implementation.startRecording(saveToCameraRoll: true, handler: { error in
             if let error = error {
                 debugPrint("Error when start recording \(error)")
@@ -20,12 +25,16 @@ public class ScreenRecorderPlugin: CAPPlugin {
         })
     }
     @objc func stop(_ call: CAPPluginCall) {
-        implementation.stoprecording(handler: { error in
+        implementation.stoprecording(handler: { error, outputURL in
             if let error = error {
                 debugPrint("Error when stop recording \(error)")
                 call.reject("Cannot stop recording")
-            } else {
-                call.resolve()
+            } else if let url = outputURL {
+                call.resolve([
+                "outputUrl": url.absoluteString
+                ])
+            }   else {
+                call.reject("Unknown error stopping recording.")
             }
         })
     }
