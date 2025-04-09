@@ -166,20 +166,38 @@ public final class ScreenRecorder {
 
      - Parameter errorHandler: Called when an error is found
      */
-    public func stoprecording(handler: @escaping (Error?) -> Void) {
-        recorder.stopCapture( handler: { error in
+    // public func stoprecording(handler: @escaping (Error?) -> Void) {
+    //     recorder.stopCapture( handler: { error in
+    //         if let error = error {
+    //             handler(error)
+    //         } else {
+    //             self.videoWriterInput?.markAsFinished()
+    //             self.micAudioWriterInput?.markAsFinished()
+    //             self.appAudioWriterInput?.markAsFinished()
+    //             self.videoWriter?.finishWriting {
+    //                 self.saveVideoToCameraRollAfterAuthorized(handler: handler)
+    //             }
+    //         }
+    //     })
+    // }
+
+    public func stoprecording(handler: @escaping (String?, Error?) -> Void) {
+        recorder.stopCapture { error in
             if let error = error {
-                handler(error)
+                handler(nil, error)
             } else {
                 self.videoWriterInput?.markAsFinished()
                 self.micAudioWriterInput?.markAsFinished()
                 self.appAudioWriterInput?.markAsFinished()
                 self.videoWriter?.finishWriting {
-                    self.saveVideoToCameraRollAfterAuthorized(handler: handler)
+                    self.saveVideoToCameraRollAfterAuthorized { error in
+                        handler(self.videoOutputURL?.path, error)
+                    }
                 }
             }
-        })
+        }
     }
+
 
     private func saveVideoToCameraRollAfterAuthorized(handler: @escaping (Error?) -> Void) {
         if PHPhotoLibrary.authorizationStatus() == .authorized {

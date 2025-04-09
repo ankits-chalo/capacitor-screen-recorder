@@ -20,12 +20,15 @@ public class ScreenRecorderPlugin: CAPPlugin {
         })
     }
     @objc func stop(_ call: CAPPluginCall) {
-        implementation.stoprecording(handler: { error in
+        implementation.stoprecording(handler: { path, error in
             if let error = error {
-                debugPrint("Error when stop recording \(error)")
-                call.reject("Cannot stop recording")
+                call.reject("Recording failed", error.localizedDescription)
+            } else if let path = path {
+                let result = JSObject()
+                result["path"] = path
+                call.resolve(result)
             } else {
-                call.resolve()
+                call.reject("Unknown error")
             }
         })
     }
