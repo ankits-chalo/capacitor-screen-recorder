@@ -36,7 +36,7 @@ public final class ScreenRecorder {
                                size: CGSize? = nil,
                                saveToCameraRoll: Bool = false,
                                handler: @escaping (Error?) -> Void) {
-        recorder.isMicrophoneEnabled = true
+        // recorder.isMicrophoneEnabled = true
         do {
             try createVideoWriter(in: outputURL)
             addVideoWriterInput(size: size)

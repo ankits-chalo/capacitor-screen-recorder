@@ -24,8 +24,8 @@ public class ScreenRecorderPlugin: CAPPlugin {
             if let error = error {
                 call.reject("Recording failed", error.localizedDescription)
             } else if let path = path {
-                let result = JSObject()
-                result["path"] = path
+                var result = JSObject()
+                result["filePath"] = path
                 call.resolve(result)
             } else {
                 call.reject("Unknown error")
