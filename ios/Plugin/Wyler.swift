@@ -200,16 +200,53 @@ public final class ScreenRecorder {
 
 
     private func saveVideoToCameraRollAfterAuthorized(handler: @escaping (Error?) -> Void) {
-        if PHPhotoLibrary.authorizationStatus() == .authorized {
+        let status = PHPhotoLibrary.authorizationStatus()
+
+        switch status {
+        case .authorized:
+            // User has already granted access, proceed to save the video
             self.saveVideoToCameraRoll(handler: handler)
-        } else {
-            PHPhotoLibrary.requestAuthorization({ (status) in
-                if status == .authorized {
+        
+        case .notDetermined:
+            // Request access
+            PHPhotoLibrary.requestAuthorization { newStatus in
+                if newStatus == .authorized {
                     self.saveVideoToCameraRoll(handler: handler)
                 } else {
-                    handler(ScreenRecorderError.photoLibraryAccessNotGranted)
+                    self.showSettingsAlert(handler: handler)
                 }
-            })
+            }
+        
+        case .denied, .restricted:
+            // Access was denied or restricted, inform the user they need to enable it in Settings
+            self.showSettingsAlert(handler: handler)
+        
+        @unknown default:
+            // Handle any future cases
+            handler(ScreenRecorderError.photoLibraryAccessNotGranted)
+        }
+    }
+
+    private func showSettingsAlert(handler: @escaping (Error?) -> Void) {
+        let alert = UIAlertController(title: "Photo Library Access Denied",
+                                    message: "Please enable access to the photo library in Settings to save recordings.",
+                                    preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { _ in
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }))
+    
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+            handler(ScreenRecorderError.photoLibraryAccessNotGranted)
+        }))
+    
+        // Present the alert on the main thread
+        DispatchQueue.main.async {
+            // Assuming you have a reference to the current view controller
+            if let topController = UIApplication.shared.keyWindow?.rootViewController {
+                topController.present(alert, animated: true, completion: nil)
+            }
         }
     }
 
