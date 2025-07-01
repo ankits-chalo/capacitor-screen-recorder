@@ -1,13 +1,16 @@
 package ee.forgr.plugin.screenrecorder;
 
+import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
-// import dev.bmcreations.scrcast.ScrCast;
-// import dev.bmcreations.scrcast.config.Options;
+
+import java.util.function.BiConsumer;
+
 import dev.chalo.scrcast.ScrCast;
 import dev.chalo.scrcast.config.Options;
+
 @CapacitorPlugin(name = "ScreenRecorder")
 public class ScreenRecorderPlugin extends Plugin {
 
@@ -22,13 +25,32 @@ public class ScreenRecorderPlugin extends Plugin {
 
   @PluginMethod
   public void start(PluginCall call) {
-    recorder.record();
-    call.resolve();
+    startRecording(call);
+  }
+
+  private void startRecording(PluginCall call) {
+    recorder.setRecordingCallback((success, message) -> {
+      if (success) {
+        call.resolve();
+      } else {
+        call.reject(message);
+      }
+    });
+    recorder.record(( success,  message) -> {
+        if (!success) {
+          call.reject(message != null ? message : "Unknown error"); // Reject with an error message
+        }
+    });
   }
 
   @PluginMethod
   public void stop(PluginCall call) {
+    recorder.onRecordingComplete(file -> {
+      JSObject result = new JSObject();
+      result.put("filePath", file.getAbsolutePath());
+      call.resolve(result);
+      return null;
+    });
     recorder.stopRecording();
-    call.resolve();
   }
 }

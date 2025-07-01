@@ -6,13 +6,7 @@ import Capacitor
  * here: https://capacitorjs.com/docs/plugins/ios
  */
 @objc(ScreenRecorderPlugin)
-public class ScreenRecorderPlugin: CAPPlugin, CAPBridgedPlugin {
-    public let identifier = "ScreenRecorderPlugin"
-    public let jsName = "ScreenRecorder"
-    public let pluginMethods: [CAPPluginMethod] = [
-        CAPPluginMethod(name: "start", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "stop", returnType: CAPPluginReturnPromise)
-    ]
+public class ScreenRecorderPlugin: CAPPlugin {
     private let implementation = ScreenRecorder()
 
     @objc func start(_ call: CAPPluginCall) {
@@ -26,12 +20,15 @@ public class ScreenRecorderPlugin: CAPPlugin, CAPBridgedPlugin {
         })
     }
     @objc func stop(_ call: CAPPluginCall) {
-        implementation.stoprecording(handler: { error in
+        implementation.stoprecording(handler: { path, error in
             if let error = error {
-                debugPrint("Error when stop recording \(error)")
-                call.reject("Cannot stop recording")
+                call.reject("Recording failed", error.localizedDescription)
+            } else if let path = path {
+                var result = JSObject()
+                result["filePath"] = path
+                call.resolve(result)
             } else {
-                call.resolve()
+                call.reject("Unknown error")
             }
         })
     }
