@@ -15,16 +15,6 @@
       "matchUpdateTypes": ["minor", "patch"],
       "matchCurrentVersion": "!/^0/",
       "automerge": true
-    },
-    {
-      "matchPackageNames": ["eslint"],
-      "matchManagers": ["npm"],
-      "enabled": false
-    },
-    {
-      "matchPackagePatterns": ["^com\\.android\\.tools\\.build\\:gradle$"],
-      "matchManagers": ["gradle"],
-      "enabled": false
     }
   ]
 }

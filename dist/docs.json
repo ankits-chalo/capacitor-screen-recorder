@@ -7,21 +7,10 @@
     "methods": [
       {
         "name": "start",
-        "signature": "(options?: { recordAudio?: boolean | undefined; } | undefined) => Promise<void>",
-        "parameters": [
-          {
-            "name": "options",
-            "docs": "Recording options",
-            "type": "{ recordAudio?: boolean | undefined; } | undefined"
-          }
-        ],
+        "signature": "() => Promise<void>",
+        "parameters": [],
         "returns": "Promise<void>",
-        "tags": [
-          {
-            "name": "param",
-            "text": "options Recording options"
-          }
-        ],
+        "tags": [],
         "docs": "start the recording",
         "complexTypes": [],
         "slug": "start"
